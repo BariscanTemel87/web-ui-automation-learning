@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="testsuite">
+    <test name="ButtonClickTest">
+        <classes>
+            <class name="StepDefs.ButtonClickTest"/>
+        </classes>
+    </test>
+    <test name="AddRecordTest">
+        <classes>
+            <class name="StepDefs.AddRecordTest"/>
+        </classes>
+    </test>
+</suite>
