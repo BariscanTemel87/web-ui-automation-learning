@@ -1,27 +1,24 @@
-package StepDefs;
+package StepDefs2;
 
-import org.junit.Assert;
-import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /*
  * This is a test class for clicking a button.
  */
-public class ButtonClickTest {
+public class ButtonClickTestByXPath {
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -47,15 +44,12 @@ public class ButtonClickTest {
     }
 
     @Test(priority = 1)
-    public void testButtonClick(){
+    public void testButtonClickByXpath(){
 
         // Click the button
         driver.get("https://demoqa.com/elements");
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#item-4")));
-        //driver.findElement(By.id("item-4")).click();
-        driver.findElement(By.cssSelector("#item-4")).click();
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h1")));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        driver.findElement(By.xpath("//*[@id=\"item-4\"]/span")).click();
 
         WebElement pageTitle = driver.findElement(By.tagName("h1"));
 
@@ -65,15 +59,10 @@ public class ButtonClickTest {
     }
 
     @Test(priority = 2)
-    public void clickOnClickMeButton(){
+    public void clickOnClickMeButtonByXPath(){
 
-        //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#SZ2tf")));
-        //wait.until(ExpectedConditions.elementToBeClickable(By.id("SZ2tf")));
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        //driver.findElement(By.cssSelector("#SZ2tf")).click();
-        //Hocam ccs selector ile click me buttonuna tıklayamadım xpatch kullandım cunku button id'si dinamik yapıya sahip. Bunu size sormak istiyorum ekstra. Bilginize.
-        //WebElement btnClick = driver.findElement(By.xpath( "//button[text()=\"Click Me\"]"));btnClick.click();
-        WebElement btnClick = driver.findElement(By.cssSelector("#app > div > div > div > div.col-12.mt-4.col-md-6 > div:nth-child(2) > div:nth-child(4) > button.btn.btn-primary"));
+        WebElement btnClick = driver.findElement(By.xpath("//button[text()='Click Me']"));
         btnClick.click();
 
         WebElement dynamicClickMessage = driver.findElement(By.tagName("p"));

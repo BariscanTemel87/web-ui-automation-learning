@@ -10,4 +10,14 @@
             <class name="StepDefs.AddRecordTest"/>
         </classes>
     </test>
+    <test name="AddRecordAndEditTestByXPath">
+        <classes>
+            <class name="StepDefs2.AddRecordAndEditTestByXPath"/>
+        </classes>
+    </test>
+    <test name="ButtonClickTestByXPath">
+        <classes>
+            <class name="StepDefs2.ButtonClickTestByXPath"/>
+        </classes>
+    </test>
 </suite>
