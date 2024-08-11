@@ -17,7 +17,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 /*
- * This is a test class for adding a record.
+ * This is a test class for adding a record in an end-to-end scenario.
  */
 public class AddRecordTest {
 
@@ -30,66 +30,50 @@ public class AddRecordTest {
         System.setProperty("webdriver.chrome.driver", "src/test/java/drivers/chromedriver");
 
         ChromeOptions options = new ChromeOptions();
-        // options.addArguments("--headless");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-extensions");
         options.addArguments("--disable-gpu");
         options.addArguments("--ignore-certificate-errors");
-        // options.addArguments("--incognito");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--start-maximized");
 
         driver = new ChromeDriver(options);
-
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
-    @Test(priority = 1)
-    public void pageIsDisplayedTest() {
-
-
+    @Test
+    public void endToEndAddRecordTest() {
+        // 1. Navigate to the Web Tables page
         driver.get("https://demoqa.com/webtables");
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
+        // 2. Verify the page title is "Web Tables"
         WebElement pageTitle = driver.findElement(By.tagName("h1"));
-
         assertTrue(pageTitle.isDisplayed());
         assertEquals(pageTitle.getText(), "Web Tables");
 
-    }
-
-    @Test(priority = 2)
-    public void addRecordButtonClick() {
-
-        //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#SZ2tf")));
-        //wait.until(ExpectedConditions.elementToBeClickable(By.id("SZ2tf")));
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-
-        WebElement btnClick = driver.findElement(By.cssSelector("#addNewRecordButton"));
+        // 3. Click the "Add New Record" button
+        WebElement btnClick = driver.findElement(By.cssSelector("button[id='addNewRecordButton']"));
         btnClick.click();
 
-        //WebElement registrationFormLabel = driver.findElement(By.cssSelector("#registration-form-modal"));
+        // 4. Wait for the registration form to be visible and verify
         WebElement registrationFormLabel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='registration-form-modal']")));
         assertTrue(registrationFormLabel.isDisplayed());
         assertEquals(registrationFormLabel.getText(), "Registration Form");
 
-    }
+        // 5. Fill out the registration form
+        driver.findElement(By.cssSelector("input[id='firstName']")).sendKeys("Bariscan");
+        driver.findElement(By.cssSelector("input[id='lastName']")).sendKeys("TEMEL");
+        driver.findElement(By.cssSelector("input[id='userEmail']")).sendKeys("bariscan.temel@gmail.com");
+        driver.findElement(By.cssSelector("input[id='age']")).sendKeys("37");
+        driver.findElement(By.cssSelector("input[id='salary']")).sendKeys("10000");
+        driver.findElement(By.cssSelector("input[id='department']")).sendKeys("IT");
 
-    @Test(priority = 3)
-    public void fillRegistrationForm() {
+        // 6. Submit the form
+        WebElement submitBtnClick = driver.findElement(By.cssSelector("button[id='submit']"));
+        submitBtnClick.click();
 
-        driver.findElement(By.cssSelector("#firstName")).sendKeys("Bariscan");
-        driver.findElement(By.cssSelector("#lastName")).sendKeys("TEMEL");
-        driver.findElement(By.cssSelector("#userEmail")).sendKeys("bariscan.temel@gmail.com");
-        driver.findElement(By.cssSelector("#age")).sendKeys("37");
-        driver.findElement(By.cssSelector("#salary")).sendKeys("10000");
-        driver.findElement(By.cssSelector("#department")).sendKeys("IT");
-
-        WebElement btnClick = driver.findElement(By.cssSelector("#submit"));
-        btnClick.click();
-
-        //WebElement element = driver.findElement(By.cssSelector("#app > div > div > div > div.col-12.mt-4.col-md-6 > div.web-tables-wrapper > div.ReactTable.-striped.-highlight > div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(1)"));
-
+        // 7. Verify the new record is added correctly
         WebElement row = driver.findElement(By.cssSelector("#app > div > div > div > div.col-12.mt-4.col-md-6 > div.web-tables-wrapper > div.ReactTable.-striped.-highlight > div.rt-table > div.rt-tbody > div:nth-child(4) > div"));
 
         String firstName = row.findElement(By.cssSelector("#app > div > div > div > div.col-12.mt-4.col-md-6 > div.web-tables-wrapper > div.ReactTable.-striped.-highlight > div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(1)")).getText();
@@ -112,7 +96,6 @@ public class AddRecordTest {
         assertEquals(email, expectedEmail, "bariscan.temel@gmail.com");
         assertEquals(salary, expectedSalary, "10000");
         assertEquals(department, expectedDepartment, "IT");
-
     }
 
     @AfterClass

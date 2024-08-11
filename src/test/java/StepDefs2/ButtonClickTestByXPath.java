@@ -16,7 +16,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 /*
- * This is a test class for clicking a button.
+ * This is a test class for clicking a button in an end-to-end scenario.
  */
 public class ButtonClickTestByXPath {
 
@@ -29,47 +29,37 @@ public class ButtonClickTestByXPath {
         System.setProperty("webdriver.chrome.driver", "src/test/java/drivers/chromedriver");
 
         ChromeOptions options = new ChromeOptions();
-        // options.addArguments("--headless");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-extensions");
         options.addArguments("--disable-gpu");
         options.addArguments("--ignore-certificate-errors");
-        // options.addArguments("--incognito");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--start-maximized");
 
         driver = new ChromeDriver(options);
-
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    @Test(priority = 1)
-    public void testButtonClickByXpath(){
-
-        // Click the button
+    @Test
+    public void endToEndButtonClickTestByXPath() {
+        // 1. Navigate to the Elements page and click the "Buttons" item
         driver.get("https://demoqa.com/elements");
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.findElement(By.xpath("//*[@id=\"item-4\"]/span")).click();
 
+        // 2. Verify the page title is "Buttons"
         WebElement pageTitle = driver.findElement(By.tagName("h1"));
-
         assertTrue(pageTitle.isDisplayed());
         assertEquals(pageTitle.getText(), "Buttons");
 
-    }
-
-    @Test(priority = 2)
-    public void clickOnClickMeButtonByXPath(){
-
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        // 3. Click on the "Click Me" button
         WebElement btnClick = driver.findElement(By.xpath("//button[text()='Click Me']"));
         btnClick.click();
 
+        // 4. Verify the dynamic click message
         WebElement dynamicClickMessage = driver.findElement(By.tagName("p"));
-
         assertTrue(dynamicClickMessage.isDisplayed());
         assertEquals(dynamicClickMessage.getText(), "You have done a dynamic click");
-
     }
 
     @AfterClass

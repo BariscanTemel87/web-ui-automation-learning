@@ -1,7 +1,5 @@
 package StepDefs;
 
-import org.junit.Assert;
-import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,15 +9,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /*
- * This is a test class for clicking a button.
+ * This is a test class for clicking a button in an end-to-end scenario.
  */
 public class ButtonClickTest {
 
@@ -32,55 +30,38 @@ public class ButtonClickTest {
         System.setProperty("webdriver.chrome.driver", "src/test/java/drivers/chromedriver");
 
         ChromeOptions options = new ChromeOptions();
-        // options.addArguments("--headless");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-extensions");
         options.addArguments("--disable-gpu");
         options.addArguments("--ignore-certificate-errors");
-        // options.addArguments("--incognito");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--start-maximized");
 
         driver = new ChromeDriver(options);
-
     }
 
-    @Test(priority = 1)
-    public void testButtonClick(){
-
+    @Test
+    public void endToEndButtonClickTest() {
         // Click the button
         driver.get("https://demoqa.com/elements");
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#item-4")));
-        //driver.findElement(By.id("item-4")).click();
-        driver.findElement(By.cssSelector("#item-4")).click();
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h1")));
+
+        WebElement buttonsItem = driver.findElement(By.cssSelector("li#item-4 span"));
+        buttonsItem.click();
 
         WebElement pageTitle = driver.findElement(By.tagName("h1"));
-
         assertTrue(pageTitle.isDisplayed());
         assertEquals(pageTitle.getText(), "Buttons");
 
-    }
-
-    @Test(priority = 2)
-    public void clickOnClickMeButton(){
-
-        //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#SZ2tf")));
-        //wait.until(ExpectedConditions.elementToBeClickable(By.id("SZ2tf")));
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        //driver.findElement(By.cssSelector("#SZ2tf")).click();
-        //Hocam ccs selector ile click me buttonuna tıklayamadım xpatch kullandım cunku button id'si dinamik yapıya sahip. Bunu size sormak istiyorum ekstra. Bilginize.
-        //WebElement btnClick = driver.findElement(By.xpath( "//button[text()=\"Click Me\"]"));btnClick.click();
-        WebElement btnClick = driver.findElement(By.cssSelector("#app > div > div > div > div.col-12.mt-4.col-md-6 > div:nth-child(2) > div:nth-child(4) > button.btn.btn-primary"));
+        // alttaki kısım için relative ccs selector bulunmalıdır!!!
+        WebElement btnClick = driver.findElement(By.cssSelector("div.mt-4:nth-child(4)>button"));
         btnClick.click();
 
         WebElement dynamicClickMessage = driver.findElement(By.tagName("p"));
-
         assertTrue(dynamicClickMessage.isDisplayed());
         assertEquals(dynamicClickMessage.getText(), "You have done a dynamic click");
-
     }
 
     @AfterClass

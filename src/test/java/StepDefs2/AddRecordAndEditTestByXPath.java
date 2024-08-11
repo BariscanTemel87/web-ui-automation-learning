@@ -17,7 +17,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 /*
- * This is a test class for adding a record and editing it.
+ * This is a test class for adding a record and editing it in an end-to-end scenario.
  */
 public class AddRecordAndEditTestByXPath {
 
@@ -41,43 +41,27 @@ public class AddRecordAndEditTestByXPath {
         options.addArguments("--start-maximized");
 
         driver = new ChromeDriver(options);
-
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
-    @Test(priority = 1)
-    public void pageIsDisplayedTestByXPath() {
-
-
+    @Test
+    public void endToEndTestByXPath() {
+        // 1. Navigate to the Web Tables page and verify the title
         driver.get("https://demoqa.com/webtables");
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-
         WebElement pageTitle = driver.findElement(By.tagName("h1"));
-
         assertTrue(pageTitle.isDisplayed());
         assertEquals(pageTitle.getText(), "Web Tables");
 
-    }
-
-    @Test(priority = 2)
-    public void addRecordButtonClickByXPath() {
-
-        //wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#SZ2tf")));
-        //wait.until(ExpectedConditions.elementToBeClickable(By.id("SZ2tf")));
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-
+        // 2. Click the "Add New Record" button
         WebElement btnClick = driver.findElement(By.xpath("//button[@id='addNewRecordButton']"));
         btnClick.click();
 
-        //WebElement registrationFormLabel = driver.findElement(By.xpath("//div[@id='registration-form-modal']"));
+        // 3. Wait for the registration form to be visible and verify
         WebElement registrationFormLabel = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='registration-form-modal']")));
         assertTrue(registrationFormLabel.isDisplayed());
         assertEquals(registrationFormLabel.getText(), "Registration Form");
 
-    }
-
-    @Test(priority = 3)
-    public void fillRegistrationFormByXPath() {
-
+        // 4. Fill out the registration form
         driver.findElement(By.xpath("//input[@id='firstName']")).sendKeys("Bariscan");
         driver.findElement(By.xpath("//input[@id='lastName']")).sendKeys("TEMEL");
         driver.findElement(By.xpath("//input[@id='userEmail']")).sendKeys("bariscan.temel@gmail.com");
@@ -85,10 +69,10 @@ public class AddRecordAndEditTestByXPath {
         driver.findElement(By.xpath("//input[@id='salary']")).sendKeys("10000");
         driver.findElement(By.xpath("//input[@id='department']")).sendKeys("IT");
 
-        WebElement btnClick = driver.findElement(By.xpath("//button[@id='submit']"));
-        btnClick.click();
+        WebElement submitBtnClick = driver.findElement(By.xpath("//button[@id='submit']"));
+        submitBtnClick.click();
 
-
+        // 5. Verify the new record is added correctly
         WebElement row = driver.findElement(By.xpath("//body/div[@id='app']/div[1]/div[1]/div[1]/div[2]/div[2]/div[3]/div[1]/div[2]/div[4]/div[1]"));
 
         String firstName = row.findElement(By.xpath("//div[contains(text(),'Bariscan')]")).getText();
@@ -112,17 +96,7 @@ public class AddRecordAndEditTestByXPath {
         assertEquals(salary, expectedSalary, "10000");
         assertEquals(department, expectedDepartment, "IT");
 
-    }
-
-    @Test(priority = 4)
-    public void updateRegistrationFormByXPath() {
-
-        WebElement pageTitle = wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h1")));
-        assertTrue(pageTitle.isDisplayed());
-        assertEquals(pageTitle.getText(), "Web Tables");
-
-        WebElement row = driver.findElement(By.xpath("//body/div[@id='app']/div[1]/div[1]/div[1]/div[2]/div[2]/div[3]/div[1]/div[2]/div[4]/div[1]"));
-
+        // 6. Edit the record
         WebElement editButton = driver.findElement(By.xpath("//*[@id='edit-record-4']"));
         editButton.click();
 
@@ -130,12 +104,12 @@ public class AddRecordAndEditTestByXPath {
         ageField.clear();
         ageField.sendKeys("38");
 
-        WebElement btnClick = driver.findElement(By.xpath("//button[@id='submit']"));
-        btnClick.click();
+        submitBtnClick = driver.findElement(By.xpath("//button[@id='submit']"));
+        submitBtnClick.click();
 
+        // 7. Verify the age is updated
         String updatedAge = row.findElement(By.xpath("//div[contains(text(),'38')]")).getText();
         assertEquals(updatedAge, "38");
-
     }
 
     @AfterClass
