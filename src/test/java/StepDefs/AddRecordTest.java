@@ -74,14 +74,14 @@ public class AddRecordTest {
         submitBtnClick.click();
 
         // 7. Verify the new record is added correctly
-        WebElement row = driver.findElement(By.cssSelector("#app > div > div > div > div.col-12.mt-4.col-md-6 > div.web-tables-wrapper > div.ReactTable.-striped.-highlight > div.rt-table > div.rt-tbody > div:nth-child(4) > div"));
+        WebElement row = driver.findElement(By.cssSelector("div.rt-table > div.rt-tbody > div:nth-child(4)"));
 
-        String firstName = row.findElement(By.cssSelector("#app > div > div > div > div.col-12.mt-4.col-md-6 > div.web-tables-wrapper > div.ReactTable.-striped.-highlight > div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(1)")).getText();
-        String lastName = row.findElement(By.cssSelector("#app > div > div > div > div.col-12.mt-4.col-md-6 > div.web-tables-wrapper > div.ReactTable.-striped.-highlight > div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(2)")).getText();
-        String age = row.findElement(By.cssSelector("#app > div > div > div > div.col-12.mt-4.col-md-6 > div.web-tables-wrapper > div.ReactTable.-striped.-highlight > div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(3)")).getText();
-        String email = row.findElement(By.cssSelector("#app > div > div > div > div.col-12.mt-4.col-md-6 > div.web-tables-wrapper > div.ReactTable.-striped.-highlight > div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(4)")).getText();
-        String salary = row.findElement(By.cssSelector("#app > div > div > div > div.col-12.mt-4.col-md-6 > div.web-tables-wrapper > div.ReactTable.-striped.-highlight > div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(5)")).getText();
-        String department = row.findElement(By.cssSelector("#app > div > div > div > div.col-12.mt-4.col-md-6 > div.web-tables-wrapper > div.ReactTable.-striped.-highlight > div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(6)")).getText();
+        String firstName = row.findElement(By.cssSelector("div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(1)")).getText();
+        String lastName = row.findElement(By.cssSelector("div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(2)")).getText();
+        String age = row.findElement(By.cssSelector("div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(3)")).getText();
+        String email = row.findElement(By.cssSelector("div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(4)")).getText();
+        String salary = row.findElement(By.cssSelector("div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(5)")).getText();
+        String department = row.findElement(By.cssSelector("#div.rt-table > div.rt-tbody > div:nth-child(4) > div > div:nth-child(6)")).getText();
 
         String expectedFirstName = "Bariscan";
         String expectedLastName = "TEMEL";

@@ -66,21 +66,21 @@ public class AddRecordAndEditTestByXPath {
         driver.findElement(By.xpath("//input[@id='lastName']")).sendKeys("TEMEL");
         driver.findElement(By.xpath("//input[@id='userEmail']")).sendKeys("bariscan.temel@gmail.com");
         driver.findElement(By.xpath("//input[@id='age']")).sendKeys("37");
-        driver.findElement(By.xpath("//input[@id='salary']")).sendKeys("10000");
+        driver.findElement(By.xpath("//input[@id='salary']")).sendKeys("5000");
         driver.findElement(By.xpath("//input[@id='department']")).sendKeys("IT");
 
         WebElement submitBtnClick = driver.findElement(By.xpath("//button[@id='submit']"));
         submitBtnClick.click();
 
         // 5. Verify the new record is added correctly
-        WebElement row = driver.findElement(By.xpath("//body/div[@id='app']/div[1]/div[1]/div[1]/div[2]/div[2]/div[3]/div[1]/div[2]/div[4]/div[1]"));
+        WebElement row = driver.findElement(By.xpath("(//div[@class='rt-tr -even' and @role='row'])[2]"));
 
         String firstName = row.findElement(By.xpath("//div[contains(text(),'Bariscan')]")).getText();
         String lastName = row.findElement(By.xpath("//div[contains(text(),'TEMEL')]")).getText();
         String age = row.findElement(By.xpath("//div[contains(text(),'37')]")).getText();
         String email = row.findElement(By.xpath("//div[contains(text(),'bariscan.temel@gmail.com')]")).getText();
-        String salary = row.findElement(By.xpath("//body/div[@id='app']/div[1]/div[1]/div[1]/div[2]/div[2]/div[3]/div[1]/div[2]/div[4]/div[1]/div[5]")).getText();
-        String department = row.findElement(By.xpath(" //div[contains(text(),'IT')]")).getText();
+        String salary = row.findElement(By.xpath(" //div[contains(text(),'5000')]")).getText();
+        String department = row.findElement(By.xpath("//div[contains(text(),'IT')]")).getText();
 
         String expectedFirstName = "Bariscan";
         String expectedLastName = "TEMEL";
